@@ -22,7 +22,7 @@ class PagesController extends Controller
 	public function getHome()
 	{
 		// Get all the posts from database
-		$posts = Post::orderBy('id','desc')->offset(0)->limit(2)->get();
+		$posts = Post::orderBy('id','desc')->offset(0)->limit(10)->get();
 
 		// Display all posts to the home page 
 		return view('pages.home')->withPosts($posts);

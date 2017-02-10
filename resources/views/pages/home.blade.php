@@ -32,6 +32,3 @@
       </div><!-- end row-->
 @endsection
 
-@section('scripts')
-  
-@endsection

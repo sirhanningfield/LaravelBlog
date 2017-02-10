@@ -14,4 +14,7 @@ Route::get('about', 'pagesController@getAbout');
 
 Route::resource('posts','postController');
 
-Route::get('auth/login', ['as'=> 'login','uses'=>'Auth\LoginController@showLoginForm']);
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index');
