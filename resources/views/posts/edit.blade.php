@@ -5,19 +5,21 @@
 @section('content')
 	
 	<div class="row">
-		{!!Form::model($post, ['route'=>['posts.update',$post->id], 'method'=> 'PUT']) !!}
+		{!!Form::model($post, ['route'=>['posts.update',$post->id], 'method'=> 'PUT', 'files'=>true]) !!}
 			<div class="col-md-8">
 				<div class="panel panel-primary">
 				  <div class="panel-heading">
 				  	{{form::label('title','Title:')}}
 				  	{{form::text('title', null, ['class'=>"form-control input-lg "])}}
 				  </div>
-
+				
 				  <div class="panel-body">
 				  	{{form::label('body','Body:')}}
 				    {{form::textarea('body',null,['class'=>"form-control"])}}
 				  </div>
 				</div>
+				{{form::label('featured_image','update the Image')}}
+				{{form::file('featured_image')}}<br>
 			</div>
 			<div class="col-md-4">
 				<div class="well">
