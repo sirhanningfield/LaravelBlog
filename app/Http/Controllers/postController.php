@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Post;
+use App\Category;
+use App\Tag;
 use Session;
 use Image;
 use Storage;
@@ -41,7 +43,11 @@ class postController extends Controller
     public function create()
     {
         //
-        return view('posts.create');
+        $categories = Category::all();
+
+        $tags = Tag::all();
+
+        return view('posts.create')->withCategories($categories)->withTags($tags);
     }
 
     /**
@@ -52,10 +58,12 @@ class postController extends Controller
      */
     public function store(Request $request)
     {
+        dd($request);
         //valedate the data
         $this->validate($request,array(
                 'title'=> 'required|max:255',
                 'slug'=>'required|alpha_dash|min:5|max:255|unique:posts,slug',
+                'category_id'=>'required|integer',
                 'body'=> 'required',
                 'featured_image'=>'sometimes|image'
 
@@ -68,6 +76,7 @@ class postController extends Controller
         $post->title = $request->title;
         $post->slug = $request->slug;
         $post->body = $request->body;
+        $post->category_id = $request->category_id;
         
         //save the image:
         if($request->hasfile('featured_image')){
@@ -101,6 +110,7 @@ class postController extends Controller
     {
         //
         $post = Post::find($id);
+
         return view('posts.show')->withPost($post);
 
     }
@@ -117,8 +127,14 @@ class postController extends Controller
 
         $post = Post::find($id);
 
+        $categories = Category::all();
+        $cats = array();
+        foreach ($categories as $category) {
+            # code...
+            $cats[$category->id] = $category->name;
+        }
         // return the edit view
-        return view('posts.edit')->withPost($post);
+        return view('posts.edit')->withPost($post)->withCats($cats);
     }
 
     /**
@@ -138,6 +154,7 @@ class postController extends Controller
 
             'title'=> 'required|max:255',
             'slug'=>"required|alpha_dash|min:5|max:255|unique:posts,slug,$id",
+            'category_id'=>'required|integer',
             'body'=>'required',
             'featured_image'=>'sometimes|image'
             ));
@@ -150,6 +167,7 @@ class postController extends Controller
         $post->title = $request->title;
         $post->slug = $request->slug;
         $post->body = $request->body;
+        $post->category_id = $request->category_id;
 
         if($request->hasfile('featured_image')){
             
@@ -194,11 +212,9 @@ class postController extends Controller
     public function destroy($id)
     {
         //find the post in the database
-
         $post = Post::find($id);
 
         // Delete photo from public folder
-
         Session::delete($post->image);
 
         // delete the post 

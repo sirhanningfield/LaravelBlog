@@ -8,6 +8,8 @@
 			<img src="{{ asset('images/'.$post->image) }}" height="400", width="800"/>
 			<h1>{{$post->title}}</h1>
 			<p class="lead">{{$post->body}}</p>
+			<hr>
+			<p>Posted In:{{$post->category->name}}</p>
 		</div>
 	</div>
 @stop

@@ -20,6 +20,21 @@
 			{{form::label('Slug','Slug: ')}}
 			{{form::text('slug',null,array('class'=>'form-control','required'=>'', 'minlength'=>'5', 'maxlength'=>'255'))}}<br>
 
+			{{form::label('category_id','Category:')}}
+			<select class="form-control" name="category_id">
+				@foreach($categories as $category)
+					<option value="{{$category->id}}">{{$category->name}}</option>
+				@endforeach
+				
+			</select><br>
+
+			{{form::label('tag_id','Tags:')}}
+			<select class="js-example-basic-multiple form-control" multiple="multiple">
+				@foreach($tags as $tag)
+				  <option value="{{$tag->id}}">{{$tag->name}}</option>
+				@endforeach    
+			</select><br>
+
 			{{form::label('featured_image','Upload an Image:')}}
 			{{form::file('featured_image')}}<br>
 

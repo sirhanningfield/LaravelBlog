@@ -30,6 +30,12 @@
 					  	</dd>
 					</dl>
 					<dl class="dl-horizontal">
+					  	<dt>Category:</dt>
+					  	<dd>
+					  		{{form::select('category_id',$cats,null,array('class'=>'form-control'))}}
+					  	</dd>
+					</dl>
+					<dl class="dl-horizontal">
 					  	<dt>Created At:</dt>
 					  	<dd><i>{{ date('d, M Y  h:ia',strtotime($post->created_at))}}<i></dd>
 					</dl>
